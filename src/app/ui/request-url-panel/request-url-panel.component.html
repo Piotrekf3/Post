@@ -1,0 +1,5 @@
+<form [formGroup]="urlForm">
+  <p-dropdown formControlName="method" [options]="httpMethods" />
+  <input class="url-input" type="text" pInputText formControlName="url" />
+  <p-button label="Send" (onClick)="sendClick.emit()" />
+</form>

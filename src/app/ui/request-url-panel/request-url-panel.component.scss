@@ -1,0 +1,9 @@
+form {
+  display: flex;
+  gap: 5px;
+  flex-flow: row nowrap;
+}
+
+.url-input {
+  flex-grow: 4;
+}
