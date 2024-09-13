@@ -1,0 +1,9 @@
+<div *ngIf="response != undefined">
+  <div>
+    <p>Http code: {{ response.status }}</p>
+  </div>
+  Body:
+  <code>
+    <pre>{{ responseText | json }}</pre>
+  </code>
+</div>
