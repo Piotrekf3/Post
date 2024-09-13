@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -11,6 +16,7 @@ import { UrlForm } from '../../util/url-form';
   imports: [DropdownModule, ReactiveFormsModule, InputTextModule, ButtonModule],
   templateUrl: './request-url-panel.component.html',
   styleUrl: './request-url-panel.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RequestUrlPanelComponent {
   @Output()

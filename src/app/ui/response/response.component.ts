@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  signal,
+} from '@angular/core';
 
 @Component({
   selector: 'app-response',
@@ -7,12 +12,13 @@ import { Component, Input } from '@angular/core';
   imports: [CommonModule],
   templateUrl: './response.component.html',
   styleUrl: './response.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ResponseComponent {
   @Input()
   set response(response: Response | undefined) {
     this._response = response;
-    response?.json().then((json) => (this.responseText = json));
+    response?.json().then((json) => this.responseText.set(json));
   }
 
   get response(): Response | undefined {
@@ -20,5 +26,5 @@ export class ResponseComponent {
   }
 
   _response: Response | undefined;
-  responseText: string | undefined;
+  responseText = signal('');
 }
