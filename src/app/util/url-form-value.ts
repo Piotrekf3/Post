@@ -1,4 +1,6 @@
+import { HttpMethod } from './http-method';
+
 export interface UrlFormValue {
-  method: string;
+  method: HttpMethod;
   url: string;
 }

@@ -1,28 +1,29 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { HomeDataService } from '../../service/home-data.service';
 import { HttpService } from '../../service/http.service';
+import { QueryParamsComponent } from '../../ui/query-params/query-params.component';
 import { RequestUrlPanelComponent } from '../../ui/request-url-panel/request-url-panel.component';
 import { ResponseComponent } from '../../ui/response/response.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RequestUrlPanelComponent, ResponseComponent],
+  imports: [RequestUrlPanelComponent, ResponseComponent, QueryParamsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
-  constructor(private readonly httpService: HttpService) {}
-
-  @ViewChild(RequestUrlPanelComponent)
-  requestUrlPanelComponent: RequestUrlPanelComponent | undefined;
+  constructor(
+    private readonly httpService: HttpService,
+    private readonly dataService: HomeDataService
+  ) {}
 
   reponse: Response | undefined;
 
   async sendRequest() {
-    if (this.requestUrlPanelComponent?.urlForm.getRawValue()) {
-      this.reponse = await this.httpService.sendRequest(
-        this.requestUrlPanelComponent?.urlForm.getRawValue()
-      );
+    const requestUrlForm = this.dataService.requestUrlForm();
+    if (requestUrlForm) {
+      this.reponse = await this.httpService.sendRequest(requestUrlForm);
     }
   }
 }
