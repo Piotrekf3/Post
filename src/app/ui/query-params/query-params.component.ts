@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { HomeDataService } from '../../service/home-data.service';
 import { QueryParam } from '../../util/query-param';
 
 interface Column {
@@ -24,5 +25,26 @@ export class QueryParamsComponent {
     { field: 'description', header: 'Description' },
   ];
 
-  queryParams: QueryParam[] = [{ description: 'asdds' }];
+  queryParams: QueryParam[] = [{ key: '', value: '', description: '' }];
+
+  constructor(private readonly dataService: HomeDataService) {
+    effect(() => {
+      this.queryParams = this.dataService.queryParams();
+    });
+  }
+
+  onFieldChange() {
+    const lastRow = this.queryParams[this.queryParams.length - 1];
+    if (lastRow.key || lastRow.value || lastRow.description) {
+      this.queryParams = [
+        ...this.queryParams,
+        { key: '', value: '', description: '' },
+      ];
+    }
+    this.dataService.setQueryParams([...this.queryParams]);
+  }
+
+  trackByFunction = (index: number) => {
+    return index;
+  };
 }

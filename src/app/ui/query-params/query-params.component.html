@@ -2,6 +2,7 @@
   [columns]="cols"
   [value]="queryParams"
   [tableStyle]="{ 'min-width': '50rem' }"
+  [rowTrackBy]="trackByFunction"
 >
   <ng-template pTemplate="header" let-columns>
     <tr>
@@ -24,7 +25,12 @@
       >
         <p-cellEditor>
           <ng-template pTemplate="input">
-            <input pInputText type="text" [(ngModel)]="queryParam[col.field]" />
+            <input
+              pInputText
+              type="text"
+              [(ngModel)]="queryParam[col.field]"
+              (ngModelChange)="onFieldChange()"
+            />
           </ng-template>
           <ng-template pTemplate="output">
             {{ queryParam[col.field] }}
